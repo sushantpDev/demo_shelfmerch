@@ -1,0 +1,12 @@
+{
+  "name": "pshelfmerch",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run server --prefix backend\" \"npm run dev --prefix frontend\"",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
