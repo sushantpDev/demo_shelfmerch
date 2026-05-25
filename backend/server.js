@@ -12,13 +12,29 @@ connectDB();
 
 const app = express();
 
+const ALLOWED_ORIGINS = [
+  process.env.CLIENT_URL,           // e.g. https://tollywoodreels.com
+  'https://changebag.org',          // Toast frontend on production
+].filter(Boolean);
+
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    // Allow no-origin requests (Postman, curl, mobile apps)
+    if (!origin) return callback(null, true);
+
+    // Allow all localhost ports in development
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      /^http:\/\/localhost:\d+$/.test(origin)
+    ) {
+      return callback(null, true);
     }
+
+    if (ALLOWED_ORIGINS.includes(origin)) {
+      return callback(null, true);
+    }
+
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true
 }));

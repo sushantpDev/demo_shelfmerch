@@ -2,8 +2,9 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 
 export const getToastAuthUrl = (req, res) => {
-  // Standard SSO login redirection (simulated since Toast lacks standard OAuth)
-  const url = `http://localhost:5174/login?redirect=http://localhost:5173/sso-callback`;
+  const toastUrl = process.env.TOAST_API_URL || 'http://localhost:5001';
+  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5175';
+  const url = `${toastUrl}/authorize?redirect=${clientUrl}/sso-callback`;
   res.json({ url });
 };
 

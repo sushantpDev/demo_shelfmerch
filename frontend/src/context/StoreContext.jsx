@@ -60,7 +60,8 @@ export const StoreProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/sso/deduct-points', {
+      const TOAST_API_URL = import.meta.env.VITE_TOAST_API_URL || 'http://localhost:5001';
+      const response = await fetch(`${TOAST_API_URL}/api/sso/deduct-points`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
